@@ -1,18 +1,34 @@
-# Role-Recommendation-Engine
-Deployed on Streamlit : https://role-recommendation-engine.streamlit.app/
-#### Approach/Methodology:
+**Solution:**  
+🔗 **Live Web App:** https://role-recommendation-engine.streamlit.app/
 
-used cosine similarity to measure the similarity between roles based on their skills. Cosine similarity is a metric used to determine how similar two entities are, irrespective of their size. It measures the cosine of the angle between two vectors projected in a multi-dimensional space.
+---
 
-#### Why Cosine Similarity?:
+## **Approach & Methodology**
+1. **Data Processing:**  
+   - The dataset contains job roles and their respective required skills.
+   - Skills are stored as a **semicolon-separated list** which is converted into a structured format.
 
-#### Steps
-1. Cosine similarity is chosen because it is effective in text-based similarity tasks and is not affected by the magnitude of the vectors, making it suitable for comparing roles based on skill sets.
+2. **Vectorization of Skills:**  
+   - We use **CountVectorizer** to transform the skills into a numerical format, enabling similarity computation.
 
-2. Convert the Dataset to CSV
+3. **Computing Similarity:**  
+   - We apply **Cosine Similarity** to measure the closeness between different job roles based on skill overlap.
 
-3. Preprocessing: preprocess the data to calculate the similarity between roles based on shared skills.
+4. **Recommendation System:**  
+   - The system identifies the **top 3 most similar roles** to the selected role and displays them.
 
-4. Similarity Calculation: use cosine similarity to calculate the similarity between roles.
+5. **Streamlit Web Interface:**  
+   - The app provides an **interactive dropdown** for role selection.
+   - Displays the **three closest roles** in a visually appealing format.
 
-5. Streamlit UI: create an interactive Streamlit UI where users can input a role and get the top 3 recommended similar roles.
+---
+
+## **Why Cosine Similarity?**
+✅ **Captures Skill Overlap:** It considers both the **presence and importance** of shared skills.
+✅ **Handles High-Dimensional Data Well:** Unlike Jaccard Similarity, Cosine Similarity works efficiently with **sparse text data**.
+✅ **Avoids Frequency Bias:** Unlike Euclidean distance, it measures the **direction of skill vectors** rather than raw counts.
+
+---
+
+🚀 **Outcome:** A **user-friendly and efficient** role recommendation engine tailored for Data Science and ML job seekers!
+
