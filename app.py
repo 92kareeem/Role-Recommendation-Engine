@@ -6,15 +6,6 @@ import streamlit as st
 # Load the dataset with encoding handling
 df = pd.read_csv('role_skills.csv', encoding='utf-8-sig')
 
-# Debug: Print the column names and the first few rows of the DataFrame
-print("Columns in the DataFrame:", df.columns.tolist())
-print("First few rows of the DataFrame:")
-print(df.head())
-
-# Check if 'Skills' column exists
-if 'Skills' not in df.columns:
-    raise KeyError("The column 'Skills' does not exist in the DataFrame. Please check the CSV file.")
-
 # Convert skills to a list of strings
 df['Skills'] = df['Skills'].apply(lambda x: x.split(';'))
 
@@ -35,13 +26,32 @@ def get_recommendations(role, cosine_sim=cosine_sim):
     return df['Role'].iloc[role_indices]
 
 # Streamlit UI
-st.title('Data Science Role Recommendation Engine')
+st.set_page_config(page_title='AI Job Recommender', layout='wide', page_icon='🧠')
 
-# Dropdown for role selection
-role = st.selectbox('Select a Role', df['Role'])
+st.markdown("""
+    <h1 style='text-align: center; color: #4A90E2;'>🔍 AI & Data Science Role Recommender</h1>
+    <p style='text-align: center;'>Find the best matching job roles based on required skills.</p>
+    <hr>
+    """, unsafe_allow_html=True)
 
-if st.button('Recommend'):
-    recommendations = get_recommendations(role)
-    st.write('Top 3 Recommended Roles:')
-    for rec in recommendations:
-        st.write(rec)
+col1, col2, col3 = st.columns([1, 2, 1])
+
+with col2:
+    role = st.selectbox('Select a Role:', df['Role'])
+    if st.button('Recommend'): 
+        recommendations = get_recommendations(role)
+        
+        st.markdown("""
+        <h3 style='color: #2C3E50;'>✨ Top 3 Recommended Roles:</h3>
+        """, unsafe_allow_html=True)
+        
+        for i, rec in enumerate(recommendations, 1):
+            st.success(f"{i}. {rec}")
+        
+        st.markdown("<hr>", unsafe_allow_html=True)
+
+st.sidebar.header("🔧 About the App")
+st.sidebar.info("This application recommends the top 3 most similar roles based on required skills using Cosine Similarity.")
+
+st.sidebar.markdown("📌 **How it works?**")
+st.sidebar.write("- Select a role from the dropdown.\n- Click 'Recommend' to get the top 3 closest job roles.\n- Based on skill similarity, the best matches are displayed.")
